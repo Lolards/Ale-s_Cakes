@@ -19,6 +19,7 @@ public class ToppingOption
     public string name;
     public Sprite icon;
     public GameObject prefab;
+    public Material material;   // opcional: si queda vacío conserva el material del prefab
 }
 
 [System.Serializable]
@@ -151,6 +152,12 @@ public class CakeBuilder : MonoBehaviour
         toppingIndex = index;
 
         currentTopping = Instantiate(list[index].prefab, cakeRoot);
+
+        Material mat = list[index].material;
+        if (mat != null)
+            foreach (Renderer r in currentTopping.GetComponentsInChildren<Renderer>())
+                r.sharedMaterial = mat;
+        
         Bounds cake = GetBounds(layers[layers.Count - 1].root);
         Bounds top = GetBounds(currentTopping);
 
