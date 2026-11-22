@@ -47,9 +47,10 @@ public class StationUI : MonoBehaviour
     {
         int locked = cake.LockedSize; // -1 = pastel vacío
         bool full = cake.IsFull;
+        bool busy = cake.IsBusy;
 
-        bigButton.interactable = !full && (locked == -1 || locked == 0);
-        smallButton.interactable = !full && (locked == -1 || locked == 1);
+        bigButton.interactable = !full && !busy && (locked == -1 || locked == 0);
+        smallButton.interactable = !full && !busy && (locked == -1 || locked == 1);
         removeButton.interactable = cake.LayerCount > 0;
 
         if (layersInfo != null)

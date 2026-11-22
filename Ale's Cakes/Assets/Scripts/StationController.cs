@@ -58,7 +58,7 @@ public class StationController : MonoBehaviour
 
     // --- Acciones que llaman los botones ---
 
-    public void AddLayer(int size) { cake.AddLayer(size); }
+    public void AddLayer(int size) { cake.AddLayer(size, -1, true); }
 
     public void RemoveLastLayer() { cake.RemoveLastLayer(); }
 
@@ -69,8 +69,14 @@ public class StationController : MonoBehaviour
     public void Deliver()
     {
         if (cake.LayerCount == 0) return;
+        if (!CustomerManager.Instance.TryDeliver()) return; // no hay un cliente esperando
 
-        Debug.Log("Pastel entregado. Aquí irá la calificación.");
+        ResetAll();
+    }
+
+    // Vacía el pastel y regresa el plato al inicio
+    public void ResetAll()
+    {
         cake.ResetCake();
         plateTarget = plateHome;
         plate.position = plateHome.position;
